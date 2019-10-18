@@ -1,0 +1,119 @@
+﻿@charset "utf-8";
+body {
+    background-image: url("https://tokidolranking.site/pic/wallpaper.gif");
+}
+.ranking-type {
+    background-color: rgba(255,255,255,0.88);
+    margin: 1rem;
+}
+.ranking-type-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.ranking-type-container__item {
+    margin: 0.5rem;
+    background-color: #D7ECFC;
+    border: none;
+    padding: 0;
+}
+.ranking-type-container__item.is-current {
+    background-color: #4169e1;
+}
+.ranking-type-container__item > a {
+    display: inline-block;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: black;
+}
+.ranking-type-container__item.is-current > a {
+    color: white;
+}
+
+.game-mode {
+    background-color: rgba(255,255,255,0.88);
+    margin: 1rem;
+}
+.game-mode-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.game-mode-container__item {
+    margin: 0.5rem;
+    background-color: #D7ECFC;
+    border: none;
+    padding: 0;
+}
+.game-mode-container__item.is-current {
+    background-color: #4169e1;
+}
+.game-mode-container__item > a {
+    display: inline-block;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: black;
+}
+.game-mode-container__item.is-current > a {
+    color: white;
+}
+
+.ranking {
+    --rank-size: 48px;
+    --icon-size: calc(var(--rank-size) - 2px);
+    --score-max-width: 640px;
+    --card-pading: 4px;
+    --icon-contents-gap: 8px;
+    border: 1px solid rgb(230, 236, 240);
+    margin: 1rem auto;
+    width: calc(var(--score-max-width) + var(--rank-size) + var(--icon-contents-gap) + 2 * var(--card-pading) + 2px);
+}
+/* 706px = calc(var(--score-max-width) + var(--rank-size) + var(--icon-contents-gap) + 2 * var(--card-pading) + 2px) */
+@media screen and (max-width: 706px){
+    .ranking {
+        width: 100%;
+    }
+}
+.ranking-card {
+    display: grid;
+    grid-template-columns: var(--rank-size) var(--icon-contents-gap) 1fr;
+    grid-template-areas: "icons . contents";
+    background-color: rgba(255,255,255,0.88);
+    border: 0 solid rgb(230, 236, 240);
+    border-bottom-width: 1px;
+    padding: var(--card-pading);
+}
+.ranking-card__icons {
+    grid-area: icons;
+}
+.ranking-card__icons > img {
+    width: var(--rank-size);
+    height: var(--rank-size);
+}
+.ranking-card__no-user-icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    border: 1px solid rgb(230, 236, 240);
+    /* Chromeでは10px以下のfont描画は難しい*/
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(101, 119, 134);
+}
+.ranking-card__rank {
+    text-align: center;
+    font-size: 1.2rem;
+}
+.ranking-card__contents {
+    grid-area: contents;
+}
+.ranking-card__user-name {
+    font-weight: bold;
+}
+.ranking-card__user-id {
+    color: rgb(101, 119, 134);
+}
+.ranking-card__contents > img {
+    width: 100%;
+}

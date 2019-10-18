@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ハルイチバン</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="index.css">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mithril/2.0.4/mithril.min.js"></script> -->
+    <!-- <script async src="index.js"></script> -->
+</head>
+<body>
+    <h1>ハルイチバン</h1>
+    <nav class="ranking-type">
+        <h2>ランキング</h2>
+        <div class="ranking-type-container">
+            <button class="ranking-type-container__item is-current"><a href="./">総合ランキング</a></button>
+            <button class="ranking-type-container__item"><a href="./">月間(今月)ランキング</a></button>
+            <button class="ranking-type-container__item"><a href="./">月間(先月)ランキング</a></button>
+        </div>
+    </nav>
+    <nav class="game-mode">
+        <h2>難易度</h2>
+        <div class="game-mode-container">
+            <button class="game-mode-container__item"><a href="./">Easy</a></button>
+            <button class="game-mode-container__item"><a href="./">Normal</a></button>
+            <button class="game-mode-container__item"><a href="./">Hard</a></button>
+            <button class="game-mode-container__item is-current"><a href="./">Extreme</a></button>
+        </div>
+    </nav>
+    <section class="ranking">
+        <article class="ranking-card">
+            <div class="ranking-card__icons">
+                <div class="ranking-card__no-user-icon"><i class="far fa-image"></i><span>NO IMAGE</span></div>
+                <img src="./1位.png" alt="1位">
+            </div>
+            <div class="ranking-card__contents">
+                <div class="ranking-card__user-info">
+                        <span class="ranking-card__user-name">夏侯勇さん</span>
+                        <span class="ranking-card__user-id">u8427969</span>
+                </div>
+                <dl>
+                    <dt>score</dt>
+                    <dd>2354350</dd>
+                </dl>
+            </div>
+        </article>
+        <article class="ranking-card">
+            <div class="ranking-card__icons">
+                <div class="ranking-card__no-user-icon"><i class="far fa-image"></i><span>NO IMAGE</span></div>
+                <img src="./2位.png" alt="2位">
+            </div>
+            <div class="ranking-card__contents">
+                <div class="ranking-card__user-info">
+                        <span class="ranking-card__user-name">vermilion教官</span>
+                        <span class="ranking-card__user-id">u7449309</span>
+                </div>
+                <dl>
+                    <dt>score</dt>
+                    <dd>2072966</dd>
+                </dl>
+            </div>
+        </article>
+        <article class="ranking-card">
+            <div class="ranking-card__icons">
+                <div class="ranking-card__no-user-icon"><i class="far fa-image"></i><span>NO IMAGE</span></div>
+                <img src="./3位.png" alt="3位">
+            </div>
+            <div class="ranking-card__contents">
+                <div class="ranking-card__user-info">
+                        <span class="ranking-card__user-name">けいたん。</span>
+                        <span class="ranking-card__user-id">u7089477</span>
+                </div>
+                <dl>
+                    <dt>score</dt>
+                    <dd>1907716</dd>
+                </dl>
+                <img src="https://tokidolranking.site/unitpic/dreaming_u7089477.png" alt="score">
+            </div>
+        </article>
+        <article class="ranking-card">
+            <div class="ranking-card__icons">
+                <div class="ranking-card__no-user-icon"><i class="far fa-image"></i><span>NO IMAGE</span></div>
+                <div class="ranking-card__rank">4位</div>
+            </div>
+            <div class="ranking-card__contents">
+                <div class="ranking-card__user-info">
+                        <span class="ranking-card__user-name">ポケテンＰ</span>
+                        <span class="ranking-card__user-id">u4475211</span>
+                </div>
+                <dl>
+                    <dt>score</dt>
+                    <dd>1600554</dd>
+                </dl>
+            </div>
+        </article>
+        <article class="ranking-card">
+            <div class="ranking-card__icons">
+                <img src="https://tokidolranking.site/icon/a0000001.png" alt="a0000001">
+                <div class="ranking-card__rank">5位</div>
+            </div>
+            <div class="ranking-card__contents">
+                <div class="ranking-card__user-info">
+                        <span class="ranking-card__user-name">神御田プロデューサー</span>
+                        <span class="ranking-card__user-id">a0000001</span>
+                </div>
+                <dl>
+                    <dt>score</dt>
+                    <dd>1468422</dd>
+                </dl>
+                <img src="https://tokidolranking.site/unitpic/dreaming_a0000001.png" alt="score">
+            </div>
+        </article>
+    </section>
+</body>
+</html>
