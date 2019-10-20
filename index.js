@@ -109,7 +109,8 @@
   const decideDefault = (list, defaultValue) => {
     return list.findIndex(v => v === defaultValue) ? defaultValue : list[list.length - 1];
   };
-  class NavBase {
+  const routeLinkClickEvent = new Event('routeLinkClick')
+  class NavBase extends EventTarget {
     /**
      * @param {readonly string[]} list target list
      * @param {string} defaultValue
@@ -117,6 +118,7 @@
      * @param {(v: string) => string} valueConverter
      */
     constructor(list, defaultValue, cssClassPrefix, valueConverter) {
+      super();
       this.list_ = list;
       this.current = decideDefault(list, defaultValue);
       this.cssClassPrefix_ = cssClassPrefix;
@@ -147,6 +149,7 @@
                   href: `${this.hrefPrefix_()}/${v}`,
                   onclick: () => {
                     this.current = v;
+                    this.dispatchEvent(routeLinkClickEvent);
                   },
                 },
                 this.valueConverter_(v)
@@ -235,4 +238,13 @@
     }
     return m('section', { class: 'ranking' }, input[rankingType][gameMode].map(createRankingCard));
   };
+  class Main {
+    constructor() {
+      this.rankingType = new RankingType();
+      this.rankingType.addEventListener('routeLinkClickEvent', () => {
+        this.gameMode = new GameMode(this.rankingType.current);
+      });
+      this.gameMode = new GameMode(this.rankingType.current);
+    }
+  }
 })();
