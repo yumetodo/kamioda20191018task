@@ -65,6 +65,16 @@
       ]
     }
   }`;
+  /**
+   * @param {EventListenerOrEventListenerObject} loaded
+   */
+  function ready(loaded) {
+    if (['interactive', 'complete'].includes(document.readyState)) {
+      loaded();
+    } else {
+      document.addEventListener('DOMContentLoaded', loaded);
+    }
+  }
   const rankMappper = Object.freeze(['./1位.png', './2位.png', './3位.png']);
   const input = JSON.parse(json);
   const rankingTypeList = Object.freeze(Object.keys(input));
@@ -92,16 +102,6 @@
     }
     return Object.freeze(re);
   };
-  /**
-   * @param {EventListenerOrEventListenerObject} loaded
-   */
-  function ready(loaded) {
-    if (['interactive', 'complete'].includes(document.readyState)) {
-      loaded();
-    } else {
-      document.addEventListener('DOMContentLoaded', loaded);
-    }
-  }
   /**
    * @param {readonly string[]} list target list
    * @param {string|null|undefined} value
@@ -282,4 +282,9 @@
       return [this.rankingType, this.gameMode, createRanking(this.rankingType.current, this.gameMode.current_)];
     }
   }
+  ready(() => {
+    m.route(document.getElementById('mithril'), '/total/extreme', {
+      '/:rankingType/:gameMode': new Main(),
+    });
+  });
 })();
