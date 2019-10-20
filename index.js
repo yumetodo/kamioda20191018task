@@ -279,7 +279,7 @@
       ) {
         this.gameMode.current = vnode.attrs['gameMode'];
       }
-      return [this.rankingType, this.gameMode, createRanking(this.rankingType.current, this.gameMode.current)];
+      return [m(this.rankingType), m(this.gameMode), createRanking(this.rankingType.current, this.gameMode.current)];
     }
   }
   ready(() => {
