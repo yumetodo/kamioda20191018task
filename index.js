@@ -149,7 +149,7 @@
                     : `${this.cssClassPrefix_}-container__item`,
               },
               m(
-                m.route.LINK,
+                m.route.Link,
                 {
                   href: `${this.hrefPrefix_()}/${v}`,
                   onclick: () => {
