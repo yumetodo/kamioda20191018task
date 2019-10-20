@@ -167,7 +167,7 @@
     select(selected) {
       this.current = selected;
       this.dispatchEvent(routeLinkClickEvent);
-  }
+    }
   }
   class RankingType extends NavBase {
     /**
@@ -259,6 +259,21 @@
         this.gameMode = new GameMode(this.rankingType.current);
       });
       this.gameMode = new GameMode(this.rankingType.current);
+    }
+    view(vnode) {
+      if (
+        Object.prototype.hasOwnProperty.call(vnode.attrs, 'rankingType') &&
+        vnode.attrs['rankingType'] !== this.rankingType.current
+      ) {
+        this.rankingType.select(vnode.attrs['rankingType']);
+      }
+      if (
+        Object.prototype.hasOwnProperty.call(vnode.attrs, 'gameMode') &&
+        vnode.attrs['gameMode'] !== this.gameMode.current
+      ) {
+        this.gameMode.select(vnode.attrs['gameMode']);
+      }
+      return [this.rankingType, this.gameMode, createRanking(this.rankingType.current, this.gameMode.current)];
     }
   }
 })();
