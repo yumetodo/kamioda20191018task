@@ -144,7 +144,7 @@
               m(
                 m.route.LINK,
                 {
-                  href: `/${v}`,
+                  href: `${this.hrefPrefix_()}/${v}`,
                   onclick: () => {
                     this.current = v;
                   },
@@ -176,7 +176,7 @@
       this.prefix_ = rankingType;
     }
     hrefPrefix_() {
-      return this.prefix_;
+      return `/${this.prefix_}`;
     }
   }
   /**
