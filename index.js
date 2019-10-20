@@ -261,7 +261,7 @@
   class Main {
     constructor() {
       this.rankingType = new RankingType();
-      this.rankingType.addEventListener('routeLinkClickEvent', () => {
+      this.rankingType.addEventListener('routeLinkClick', () => {
         this.gameMode = new GameMode(this.rankingType.current);
       });
       this.gameMode = new GameMode(this.rankingType.current);
