@@ -37,8 +37,6 @@
         ],
         "no-useless-escape":"error",
         "camelcase":"error",
-        "node/shebang": "error",
-        "node/no-unsupported-features/es-syntax": "off",
         "prettier/prettier": [
             "error", {
                 "singleQuote": true,
