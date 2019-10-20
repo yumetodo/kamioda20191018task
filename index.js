@@ -239,8 +239,8 @@
               m('span', 'NO IMAGE'),
             ]),
         rank < rankMappper.length
-          ? m('img', { src: rankMappper[rank], alt: `${rank}位` })
-          : m('div', { class: `${cssClassPrefix}__rank` }, `${rank}位`),
+          ? m('img', { src: rankMappper[rank], alt: `${rank + 1}位` })
+          : m('div', { class: `${cssClassPrefix}__rank` }, `${rank + 1}位`),
       ]),
       m('div', { class: `${cssClassPrefix}__contents` }, contents),
     ]);
