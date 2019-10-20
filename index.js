@@ -275,11 +275,11 @@
       }
       if (
         Object.prototype.hasOwnProperty.call(vnode.attrs, 'gameMode') &&
-        vnode.attrs['gameMode'] !== this.gameMode.current_
+        vnode.attrs['gameMode'] !== this.gameMode.current
       ) {
         this.gameMode.current = vnode.attrs['gameMode'];
       }
-      return [this.rankingType, this.gameMode, createRanking(this.rankingType.current, this.gameMode.current_)];
+      return [this.rankingType, this.gameMode, createRanking(this.rankingType.current, this.gameMode.current)];
     }
   }
   ready(() => {
