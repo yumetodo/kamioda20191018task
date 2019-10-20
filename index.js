@@ -182,7 +182,7 @@
     constructor(rankingType) {
       super(
         rankingTypeList,
-        decideDefault(rankingTypeList, rankingType, 'top'),
+        decideDefault(rankingTypeList, rankingType, 'total'),
         'ranking-type',
         v => `${rankingTypeDescriptionMap.get(v)}ランキング`
       );
