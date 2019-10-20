@@ -125,7 +125,7 @@
     constructor(list, selectedValue, cssClassPrefix, valueConverter) {
       super();
       this.list_ = list;
-      this.current = selectedValue;
+      this.current_ = selectedValue;
       this.cssClassPrefix_ = cssClassPrefix;
       this.valueConverter_ = valueConverter;
     }
@@ -144,7 +144,7 @@
               'button',
               {
                 class:
-                  this.current === v
+                  this.current_ === v
                     ? `${this.cssClassPrefix_}-container__item is-current`
                     : `${this.cssClassPrefix_}-container__item`,
               },
@@ -153,7 +153,7 @@
                 {
                   href: `${this.hrefPrefix_()}/${v}`,
                   onclick: () => {
-                    this.current = v;
+                    this.current_ = v;
                     this.dispatchEvent(routeLinkClickEvent);
                   },
                 },
@@ -164,8 +164,14 @@
         )
       );
     }
-    select(selected) {
-      this.current = selected;
+    /**
+     * @returns {string}
+     */
+    get current() {
+      return this.current_;
+    }
+    set current(selected) {
+      this.current_ = selected;
       this.dispatchEvent(routeLinkClickEvent);
     }
   }
@@ -256,24 +262,24 @@
     constructor() {
       this.rankingType = new RankingType();
       this.rankingType.addEventListener('routeLinkClickEvent', () => {
-        this.gameMode = new GameMode(this.rankingType.current);
+        this.gameMode = new GameMode(this.rankingType.current_);
       });
-      this.gameMode = new GameMode(this.rankingType.current);
+      this.gameMode = new GameMode(this.rankingType.current_);
     }
     view(vnode) {
       if (
         Object.prototype.hasOwnProperty.call(vnode.attrs, 'rankingType') &&
-        vnode.attrs['rankingType'] !== this.rankingType.current
+        vnode.attrs['rankingType'] !== this.rankingType.current_
       ) {
-        this.rankingType.select(vnode.attrs['rankingType']);
+        this.rankingType.current = vnode.attrs['rankingType'];
       }
       if (
         Object.prototype.hasOwnProperty.call(vnode.attrs, 'gameMode') &&
-        vnode.attrs['gameMode'] !== this.gameMode.current
+        vnode.attrs['gameMode'] !== this.gameMode.current_
       ) {
-        this.gameMode.select(vnode.attrs['gameMode']);
+        this.gameMode.current = vnode.attrs['gameMode'];
       }
-      return [this.rankingType, this.gameMode, createRanking(this.rankingType.current, this.gameMode.current)];
+      return [this.rankingType, this.gameMode, createRanking(this.rankingType.current_, this.gameMode.current_)];
     }
   }
 })();
