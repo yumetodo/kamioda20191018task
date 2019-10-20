@@ -104,23 +104,28 @@
   }
   /**
    * @param {readonly string[]} list target list
-   * @param {string} defaultValue
+   * @param {string|null|undefined} value
+   * @param {string} fallbackValue
    */
-  const decideDefault = (list, defaultValue) => {
-    return list.findIndex(v => v === defaultValue) ? defaultValue : list[list.length - 1];
+  const decideDefault = (list, value, fallbackValue) => {
+    return value && list.findIndex(v => v === value)
+      ? value
+      : list.findIndex(v => v === fallbackValue)
+      ? fallbackValue
+      : list[list.length - 1];
   };
-  const routeLinkClickEvent = new Event('routeLinkClick')
+  const routeLinkClickEvent = new Event('routeLinkClick');
   class NavBase extends EventTarget {
     /**
      * @param {readonly string[]} list target list
-     * @param {string} defaultValue
+     * @param {string} selectedValue
      * @param {string} cssClassPrefix
      * @param {(v: string) => string} valueConverter
      */
-    constructor(list, defaultValue, cssClassPrefix, valueConverter) {
+    constructor(list, selectedValue, cssClassPrefix, valueConverter) {
       super();
       this.list_ = list;
-      this.current = decideDefault(list, defaultValue);
+      this.current = selectedValue;
       this.cssClassPrefix_ = cssClassPrefix;
       this.valueConverter_ = valueConverter;
     }
@@ -159,23 +164,32 @@
         )
       );
     }
+    select(selected) {
+      this.current = selected;
+      this.dispatchEvent(routeLinkClickEvent);
+  }
   }
   class RankingType extends NavBase {
-    constructor() {
-      super(rankingTypeList, 'top', 'ranking-type', v => `${rankingTypeDescriptionMap.get(v)}ランキング`);
-    }
-  }
-  class GameMode extends NavBase {
     /**
      * @param {string} rankingType
      */
     constructor(rankingType) {
       super(
-        createGameModeList(input[rankingType]),
-        'extreme',
-        'game-mode',
-        v => v.charAt(0).toUpperCase() + v.slice(1)
+        rankingTypeList,
+        decideDefault(rankingTypeList, rankingType, 'top'),
+        'ranking-type',
+        v => `${rankingTypeDescriptionMap.get(v)}ランキング`
       );
+    }
+  }
+  class GameMode extends NavBase {
+    /**
+     * @param {string} rankingType
+     * @param {string} gameMode
+     */
+    constructor(rankingType, gameMode) {
+      const list = createGameModeList(input[rankingType]);
+      super(list, decideDefault(list, gameMode, 'extreme'), 'game-mode', v => v.charAt(0).toUpperCase() + v.slice(1));
       this.prefix_ = rankingType;
     }
     hrefPrefix_() {
