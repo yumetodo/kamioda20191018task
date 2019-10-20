@@ -262,14 +262,14 @@
     constructor() {
       this.rankingType = new RankingType();
       this.rankingType.addEventListener('routeLinkClickEvent', () => {
-        this.gameMode = new GameMode(this.rankingType.current_);
+        this.gameMode = new GameMode(this.rankingType.current);
       });
-      this.gameMode = new GameMode(this.rankingType.current_);
+      this.gameMode = new GameMode(this.rankingType.current);
     }
     view(vnode) {
       if (
         Object.prototype.hasOwnProperty.call(vnode.attrs, 'rankingType') &&
-        vnode.attrs['rankingType'] !== this.rankingType.current_
+        vnode.attrs['rankingType'] !== this.rankingType.current
       ) {
         this.rankingType.current = vnode.attrs['rankingType'];
       }
@@ -279,7 +279,7 @@
       ) {
         this.gameMode.current = vnode.attrs['gameMode'];
       }
-      return [this.rankingType, this.gameMode, createRanking(this.rankingType.current_, this.gameMode.current_)];
+      return [this.rankingType, this.gameMode, createRanking(this.rankingType.current, this.gameMode.current_)];
     }
   }
 })();
