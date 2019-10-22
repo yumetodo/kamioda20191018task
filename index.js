@@ -114,8 +114,7 @@
       ? fallbackValue
       : list[list.length - 1];
   };
-  const routeLinkClickEvent = new Event('routeLinkClick');
-  class NavBase extends EventTarget {
+  class NavBase {
     /**
      * @param {readonly string[]} list target list
      * @param {string} selectedValue
@@ -151,12 +150,8 @@
               m(
                 m.route.Link,
                 {
-                  href: `${this.hrefPrefix_()}/${v}`,
-                  onclick: () => {
-                    this.current_ = v;
-                    this.dispatchEvent(routeLinkClickEvent);
+                  options: { replace: true },
                   },
-                },
                 this.valueConverter_(v)
               )
             )
@@ -172,7 +167,6 @@
     }
     set current(selected) {
       this.current_ = selected;
-      this.dispatchEvent(routeLinkClickEvent);
     }
   }
   class RankingType extends NavBase {
@@ -261,7 +255,6 @@
   class Main {
     constructor() {
       this.rankingType = new RankingType();
-      this.rankingType.addEventListener('routeLinkClick', () => {
         this.gameMode = new GameMode(this.rankingType.current);
       });
       this.gameMode = new GameMode(this.rankingType.current);
