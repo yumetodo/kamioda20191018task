@@ -108,9 +108,9 @@
    * @param {string} fallbackValue
    */
   const decideDefault = (list, value, fallbackValue) => {
-    return value && list.findIndex(v => v === value)
+    return value && -1 !== list.findIndex(v => v === value)
       ? value
-      : list.findIndex(v => v === fallbackValue)
+      : -1 !== list.findIndex(v => v === fallbackValue)
       ? fallbackValue
       : list[list.length - 1];
   };
