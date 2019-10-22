@@ -108,6 +108,7 @@
    * @param {string} fallbackValue
    */
   const decideDefault = (list, value, fallbackValue) => {
+    console.log(`decideDefault(): value=${value}, fallbackValue=${fallbackValue}`, list);
     return value && -1 !== list.findIndex(v => v === value)
       ? value
       : -1 !== list.findIndex(v => v === fallbackValue)
@@ -122,16 +123,20 @@
      * @param {(v: string) => string} valueConverter
      */
     constructor(list, selectedValue, cssClassPrefix, valueConverter) {
-      super();
       this.list_ = list;
       this.current_ = selectedValue;
       this.cssClassPrefix_ = cssClassPrefix;
+      this.hrefCreater_ = () => '';
       this.valueConverter_ = valueConverter;
     }
-    hrefPrefix_() {
-      return '';
+    /**
+     * @param {(s: string) => string} hrefCreater
+     */
+    injectHrefCreater(hrefCreater) {
+      this.hrefCreater_ = hrefCreater;
     }
     view() {
+      console.log(`${this.constructor.name}#view() this.current=${this.current}`);
       return m(
         'nav',
         { class: this.cssClassPrefix_ },
@@ -150,8 +155,9 @@
               m(
                 m.route.Link,
                 {
+                  href: this.hrefCreater_(v),
                   options: { replace: true },
-                  },
+                },
                 this.valueConverter_(v)
               )
             )
@@ -166,6 +172,7 @@
       return this.current_;
     }
     set current(selected) {
+      console.log(`${this.constructor.name}#set current(${selected})`);
       this.current_ = selected;
     }
   }
@@ -189,11 +196,10 @@
      */
     constructor(rankingType, gameMode) {
       const list = createGameModeList(input[rankingType]);
-      super(list, decideDefault(list, gameMode, 'extreme'), 'game-mode', v => v.charAt(0).toUpperCase() + v.slice(1));
+      const selected = decideDefault(list, gameMode, 'extreme');
+      super(list, selected, 'game-mode', v => v.charAt(0).toUpperCase() + v.slice(1));
+      console.log(`${this.constructor.name}#constructor(): selected=${selected}`, list);
       this.prefix_ = rankingType;
-    }
-    hrefPrefix_() {
-      return `/${this.prefix_}`;
     }
   }
   /**
@@ -255,22 +261,27 @@
   class Main {
     constructor() {
       this.rankingType = new RankingType();
-        this.gameMode = new GameMode(this.rankingType.current);
-      });
       this.gameMode = new GameMode(this.rankingType.current);
+      this.rankingType.injectHrefCreater(rankTypeSelected => {
+        const gameMode = decideDefault(createGameModeList(input[rankTypeSelected]), this.gameMode.current, 'extreme');
+        console.log(`this.rankingType.injectHrefCreater:: /${rankTypeSelected}/${gameMode}`);
+        return `/${rankTypeSelected}/${gameMode}`;
+      });
+      this.gameMode.injectHrefCreater(gameModeSelected => `/${this.rankingType.current}/${gameModeSelected}`);
     }
     view(vnode) {
       if (
         Object.prototype.hasOwnProperty.call(vnode.attrs, 'rankingType') &&
-        vnode.attrs['rankingType'] !== this.rankingType.current
+        Object.prototype.hasOwnProperty.call(vnode.attrs, 'gameMode')
       ) {
-        this.rankingType.current = vnode.attrs['rankingType'];
-      }
-      if (
-        Object.prototype.hasOwnProperty.call(vnode.attrs, 'gameMode') &&
-        vnode.attrs['gameMode'] !== this.gameMode.current
-      ) {
-        this.gameMode.current = vnode.attrs['gameMode'];
+        if (vnode.attrs['rankingType'] !== this.rankingType.current) {
+          this.gameMode = new GameMode(vnode.attrs['rankingType'], vnode.attrs['gameMode']);
+          this.rankingType.current = vnode.attrs['rankingType'];
+          this.gameMode.injectHrefCreater(gameModeSelected => `/${this.rankingType.current}/${gameModeSelected}`);
+        }
+        if (vnode.attrs['gameMode'] !== this.gameMode.current) {
+          this.gameMode.current = vnode.attrs['gameMode'];
+        }
       }
       return [m(this.rankingType), m(this.gameMode), createRanking(this.rankingType.current, this.gameMode.current)];
     }
